@@ -1,10 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment    # what do you want to create
 metadata:
-  name: <name>
+  name: <name>    # name of the deployment
   labels:
     app: <app_name> 
-spec:
+spec:  # specification of the deployment 
   replicas: <number_of_replicas>
   selector:
     matchlabels:
@@ -13,9 +13,9 @@ spec:
       metadata: 
         labels:
           app: <app_name>
-      spec:
+      spec:  # specification for the pods
         containers:
         - name: <container_name> 
-          image: <image>
+          image: <container_image>
           ports:
           - containerPort: <container_port>
