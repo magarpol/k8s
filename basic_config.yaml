@@ -18,4 +18,4 @@ spec:
         - name: <container_name> 
           image: <image>
           ports:
-        - containerPort: <container_port>
+          - containerPort: <container_port>
