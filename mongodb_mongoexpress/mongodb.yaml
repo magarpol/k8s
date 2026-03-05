@@ -1,1 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:latest
+          ports:
+          - containerPort: 27017  # all this info can be found in docker hub
+          env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef: # from the secret created in mongodb-secret.yaml
+                name: mongodb-secret
+                key: mongo-root-username 
+        - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef: # from the secret created in mongodb-secret.yaml
+                name: mongodb-secret
+                key: mongo-root-password
+--- # Serviced for MongoDB
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP   # same port as the container port
+      port: 27017
+      targetPort: 27017
 
